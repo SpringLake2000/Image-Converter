@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from PIL import Image, ImageFilter
+import numpy as np
 import os
 
 app = Flask(__name__)
@@ -55,18 +56,31 @@ def uploaded_file(filename):
 
 
 def process_image(input_path, output_path, operation):
-    # Open the image using PIL
+    """Process the image using NumPy for pixel manipulation."""
+    # Open the image using PIL and convert to a NumPy array
     with Image.open(input_path) as img:
+        image_array = np.array(img)
+
         if operation == "grayscale":
-            processed_img = img.convert("L")
+            # Convert to grayscale by calculating the mean of the R, G, and B channels
+            grayscale_array = np.mean(image_array[..., :3], axis=2, dtype=int)  # Mean across R, G, B channels
+            result_array = np.stack([grayscale_array] * 3, axis=-1)  # Stack grayscale values back into 3 channels
+
+            # Ensure the resulting array is of the correct data type (uint8)
+            result_array = result_array.astype(np.uint8)
+
         elif operation == "blur":
+            # Apply blur using PIL's GaussianBlur (unchanged from original)
             processed_img = img.filter(ImageFilter.GaussianBlur(radius=10))  # Stronger blur
+            processed_img.save(output_path)
+            return  # Return early since the blur operation is handled by PIL directly
+
         else:
             raise ValueError("Invalid operation")
 
-        # Save the processed image
-        processed_img.save(output_path)
-
+        # Save the processed grayscale image
+        result_image = Image.fromarray(result_array)
+        result_image.save(output_path)
 
 if __name__ == "__main__":
     app.run(debug=True)
