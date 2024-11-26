@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Result</title>
+    <style>
+        body {
+            background-color: #0d222f;
+            color: #f1c8d6;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #f178a1;
+        }
+        img {
+            margin: 10px 0;
+            border: 2px solid #f1c8d6;
+            border-radius: 5px;
+            max-width: 500px;
+            height: auto;
+        }
+        a {
+            text-decoration: none;
+            background-color: #f178a1;
+            color: #0d222f;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        a:hover {
+            background-color: #f1c8d6;
+            color: #0d222f;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conversion Result</h1>
+    <h2>Before:</h2>
+    <img src="{{ input_image }}" alt="Original Image">
+
+    <h2>After:</h2>
+    <img src="{{ url_for('static', filename=output_image) }}" alt="Processed Image">
+    <br>
+    <br>
+
+    <a href="/">Go Back</a>
+</body>
+</html>

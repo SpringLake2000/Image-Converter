@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Converter</title>
+    <style>
+        body {
+            background-color: #0d222f;
+            color: #f1c8d6;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            color: #f178a1;
+            margin-bottom: 50px;
+            font-size: 70px;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        input[type="file"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #f1c8d6;
+            border-radius: 5px;
+            background-color: #0d222f;
+            color: #f1c8d6;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            background-color: #f178a1;
+            color: #0d222f;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #f1c8d6;
+            color: #0d222f;
+        }
+        .error {
+            color: #f178a1;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Converter</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <label for="image">Upload image (JPG or PNG):</label>
+            <input type="file" name="image" id="image" accept=".jpg,.png" required>
+
+            <br><br>
+            <label for="operation">Select an option:</label>
+            <select name="operation" id="operation" required>
+                <option value="grayscale">Grayscale</option>
+                <option value="blur">Blur</option>
+            </select>
+
+            <br><br>
+            <button type="submit">Convert</button>
+        </form>
+    </div>
+</body>
+</html>
